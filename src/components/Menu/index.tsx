@@ -7,22 +7,25 @@ import {
 } from 'lucide-react';
 import styles from './styles.module.css';
 import { useState, useEffect } from 'react';
+import { RouterLink } from '../RouterLink';
 
 type AvaliableThemes = 'dark' | 'light';
 
 export function Menu() {
   const [theme, setTheme] = useState<AvaliableThemes>(() => {
-    const storageTheme =
-      (localStorage.getItem('theme') as AvaliableThemes) || 'dark';
+    //const[valorAtualEstado, FunçaoQueAtualizaEsseValor] = useState(valorQueOEstadoComeçaTendo)
+    const storageTheme = //busco o valor salvo no navegador
+      (localStorage.getItem('theme') as AvaliableThemes) || 'dark'; //o valor retornado do localStorage será do tipo AvaliableThemes, senão define como padrão o dark
     return storageTheme;
   });
 
   const nextThemeIcon = {
+    //objeto
     dark: <SunIcon />,
     light: <MoonIcon />,
   };
 
-  function handleThemeChange(
+  function handleThemeChange( //função para trocar de tema
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
   ) {
     event.preventDefault(); //não seguirá o link
@@ -44,38 +47,39 @@ export function Menu() {
   // }, []); // Executa apenas quando o React monta o componente na tela pela primeira vez
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
+    //atualiza os componentes quando ocorre uma ação
+    document.documentElement.setAttribute('data-theme', theme); //mudo o data-theme do html para o valor de theme atual.
+    localStorage.setItem('theme', theme); //mudo o valor no navegador para que fique salvo, para quando recarregar a página.
   }, [theme]); // Executa apenas quando o valor de theme muda
 
   return (
     <nav className={styles.menu}>
-      <a
-        href='#'
+      <RouterLink
         className={styles.menuLink}
+        href='/'
         aria-label='Ver Ir para home'
         title='Ir para home'
       >
         <HouseIcon />
-      </a>
+      </RouterLink>
 
-      <a
-        href='#'
+      <RouterLink
+        href='history'
         className={styles.menuLink}
         aria-label='Ver Histórico'
         title='Ver Histórico'
       >
         <HistoryIcon />
-      </a>
+      </RouterLink>
 
-      <a
-        href='#'
+      <RouterLink
+        href='settings'
         className={styles.menuLink}
         aria-label='Configurações'
         title='Configurações'
       >
         <SettingsIcon />
-      </a>
+      </RouterLink>
 
       <a
         href='#'

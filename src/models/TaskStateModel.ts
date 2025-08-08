@@ -1,5 +1,6 @@
 import type { TaskModel } from './TaskModel';
 
+//aqui estou tipando
 export type TaskStateModel = {
   //para o que eu preciso disso para armazenar
   tasks: TaskModel[]; //histórico, MainForm
