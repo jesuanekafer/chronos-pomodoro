@@ -6,6 +6,7 @@
 // payload <- os dados extras enviados junto com a action, se necessário para atualizar o estado
 
 import type { TaskModel } from '../../models/TaskModel';
+import type { TaskStateModel } from '../../models/TaskStateModel';
 
 //Define os tipos possíveis de ação como um enum:Com o enum, o TypeScript garante que você só pode usar valores válidos
 export enum TaskActionTypes {
@@ -14,6 +15,7 @@ export enum TaskActionTypes {
   RESET_STATE = 'RESET_STATE',
   COUNT_DOWN = 'COUNT_DOWN',
   COMPLETE_TASK = 'COMPLETE_TASK',
+  CHANGE_SETTINGS = 'CHANGE_SETTINGS',
 }
 
 export type TaskActionsWithPayload =
@@ -24,6 +26,10 @@ export type TaskActionsWithPayload =
   | {
       type: TaskActionTypes.COUNT_DOWN;
       payload: { secondsRemaining: number };
+    }
+  | {
+      type: TaskActionTypes.CHANGE_SETTINGS;
+      payload: TaskStateModel['config'];
     };
 
 export type TaskActionsWithoutPayload =

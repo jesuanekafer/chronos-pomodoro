@@ -7,13 +7,13 @@ import type { TaskModel } from '../../models/TaskModel';
 import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
 import { getNextCycle } from '../../utils/getNextCycle';
 import { getNextCycleType } from '../../utils/getNextCycleType';
-import { TaskActionTypes } from '../../contexts/TaskContext/taskActions';
+import { TaskActionTypes } from '../../contexts/TaskContext/TaskActionTypes.1';
 import { Tips } from '../Tips';
 import { showMessage } from '../../adapters/showMessage';
 
 export function MainForm() {
   const { state, dispatch } = useTaskContext();
-  const taskNameInput = useRef<HTMLInputElement>(null); //Cria uma referência (ref) ao input de texto para acessar seu valor diretamente.
+  const taskNameInput = useRef<HTMLInputElement>(null);
   const lastTaskName = state.tasks[state.tasks.length - 1]?.name || '';
 
   // ciclos
@@ -21,7 +21,7 @@ export function MainForm() {
   const nextCyleType = getNextCycleType(nextCycle);
 
   function handleCreateNewTask(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault(); //Impede o recarregamento da página ao submeter o formulário.
+    event.preventDefault();
     showMessage.dismiss();
 
     if (taskNameInput.current === null) return;
@@ -42,7 +42,8 @@ export function MainForm() {
       duration: state.config[nextCyleType],
       type: nextCyleType,
     };
-    dispatch({ type: TaskActionTypes.START_TASK, payload: newTask }); //Envia a ação START_TASK com a nova tarefa para atualizar o estado global.
+
+    dispatch({ type: TaskActionTypes.START_TASK, payload: newTask });
 
     showMessage.success('Tarefa iniciada');
   }
@@ -50,7 +51,7 @@ export function MainForm() {
   function handleInterruptTask() {
     showMessage.dismiss();
     showMessage.error('Tarefa interrompida!');
-    dispatch({ type: TaskActionTypes.INTERRUPT_TASK }); //Dispara a ação para interromper a tarefa atual.
+    dispatch({ type: TaskActionTypes.INTERRUPT_TASK });
   }
 
   return (
